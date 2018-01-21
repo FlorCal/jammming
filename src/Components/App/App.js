@@ -46,7 +46,7 @@ class App extends React.Component {
   savePlayList() {
     const trackURIs = []
     this.state.playListTracks.forEach(function(track){
-      trackURIs.push('spotify:track:'+track.id);
+      trackURIs.push('spotify:track:' + track.id);
     })
     return trackURIs
   }
