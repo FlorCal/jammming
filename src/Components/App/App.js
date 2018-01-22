@@ -48,10 +48,10 @@ class App extends React.Component {
     this.state.playListTracks.forEach(function(track){
       trackURIs.push('spotify:track:' + track.id);
     })
-    return trackURIs
+    Spotify.savePlaylist(this.state.playListName, trackURIs)
   }
 
-  search(term){
+  search(term) {
     Spotify.search(term)
       .then(searchResults => this.setState({
         searchResults: searchResults
@@ -67,21 +67,22 @@ class App extends React.Component {
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
           <SearchBar onSearch={this.search} />
-            <div className="App-playlist">
-              <SearchResults
-                onAdd={this.addTrack}
-                onRemove={this.removeTrack}
-                searchResults={this.state.searchResults}
-                AppState={this.state} />
 
-              <PlayList
-                playListName={this.state.playListName}
-                playListTracks={this.state.playListTracks}
-                onRemove={this.removeTrack}
-                onNameChange={this.updatePlayListName}
-                onSave={this.savePlayList}/>
+          <div className="App-playlist">
+            <SearchResults
+              onAdd={this.addTrack}
+              onRemove={this.removeTrack}
+              searchResults={this.state.searchResults}
+              AppState={this.state} />
 
-            </div>
+            <PlayList
+              playListName={this.state.playListName}
+              playListTracks={this.state.playListTracks}
+              onRemove={this.removeTrack}
+              onNameChange={this.updatePlayListName}
+              onSave={this.savePlayList}/>
+
+          </div>
         </div>
       </div>
     );

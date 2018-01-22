@@ -16,24 +16,27 @@ const Spotify = {
       window.history.pushState('Access Token', null, '/');
       return accessToken;
 
-    }else {
+    } else {
       const redirectURL =
       `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&scope=playlist-modify-public&redirect_uri=${REDIRECT_URI}`;
       window.location = redirectURL;
     }
   },
 
+
   search(term) {
      accessToken = Spotify.getAccessToken();
      const fetchURL = `https://api.spotify.com/v1/search?type=track&q=${term}`;
      const headers = {headers: {Authorization: `Bearer  ${accessToken}`}};
-     return fetch(fetchURL, headers).then(response => {
-       if (response.ok) {
-         return response.json();
-       }
-       throw new Error('Request failed!');
-     }, networkError => console.log(networkError.message)
-     ).then(jsonResponse => {
+     return fetch(fetchURL, headers)
+     .then(response => {
+         if (response.ok) {
+           return response.json();
+         }
+         throw new Error('Request failed!');
+       }, networkError => console.log(networkError.message)
+     )
+     .then(jsonResponse => {
          if (jsonResponse.tracks.items) {
            return jsonResponse.tracks.items.map(track => {
              return {
